@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\StudentController;
-use App\Http\Controllers\CheckResult;
+use App\Http\Controllers\CheckResultController;
+use App\Http\Controllers\admin\ResultController;
+use App\Http\Controllers\admin\SemesterController;
+use App\Http\Controllers\admin\ClassController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,8 +33,33 @@ Route::get('/student/edit/{id}',[StudentController::class,'edit']);
 Route::post('/student/update/{id}',[StudentController::class,'update']);
 Route::get('/student/destroy/{id}',[StudentController::class,'destroy']);
 
+Route::get('/result/all',[ResultController::class,'index']);
+Route::get('/result/create/',[ResultController::class,'create']);
+Route::post('/result/store/',[ResultController::class,'store']);
+Route::get('/result/edit/{id}',[ResultController::class,'edit']);
+Route::post('/result/update/{id}',[ResultController::class,'update']);
+Route::get('/result/delete/{id}',[ResultController::class,'destroy']);
 
 
 
-Route::get('/result',[CheckResult::class, 'index']);
-Route::get('/show/{id}',[CheckResult::class, 'show']);
+Route::get('/semester/',[SemesterController::class,'index']);
+Route::get('/semester/create/',[SemesterController::class,'create']);
+Route::post('/semester/store/',[SemesterController::class,'store']);
+Route::get('/semester/edit/{id}',[SemesterController::class,'edit']);
+Route::post('/semester/update/{id}',[SemesterController::class,'update']);
+Route::get('/semester/delete/{id}',[SemesterController::class,'destroy']);
+
+
+Route::get('/class',[ClassController::class,'index']);
+Route::get('/class/create',[ClassController::class,'create']);
+Route::post('/class/store',[ClassController::class,'store']);
+Route::get('/class/edit/{id}',[ClassController::class,'edit']);
+Route::post('/class/update/{id}',[ClassController::class,'update']);
+Route::get('/class/delete/{id}',[ClassController::class,'destroy']);
+
+
+
+
+
+Route::get('/result',[CheckResultController::class, 'index']);
+Route::get('/show/{id}',[CheckResultController::class, 'show']);

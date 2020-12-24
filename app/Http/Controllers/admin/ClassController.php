@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Models\Student;
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\MstClass;
 use DB;
-class CheckResult extends Controller
+class ClassController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +15,8 @@ class CheckResult extends Controller
      */
     public function index()
     {
-        
-        return view('result');
+        $data['class'] = MstClass::get(); 
+        return view('admin.class.index',$data);
     }
 
     /**
@@ -24,7 +26,7 @@ class CheckResult extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.class.create');
     }
 
     /**
@@ -35,7 +37,16 @@ class CheckResult extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'class_name' => 'required'
+        ]);
+
+        $data = MstClass::create([
+            'class_name' => $request->class_name,
+        ]);
+
+        return redirect('class');
+
     }
 
     /**
@@ -46,8 +57,7 @@ class CheckResult extends Controller
      */
     public function show($id)
     {
-        //return DB::table('students')->where('roll',2)->get();
-        Student::where('roll',$id);
+        //
     }
 
     /**
@@ -58,7 +68,8 @@ class CheckResult extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['cls'] = DB::table('mst_classes')->where('id',$id)->first();
+        return view('admin.class.edit',$data);
     }
 
     /**
@@ -70,7 +81,15 @@ class CheckResult extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'class_name' => 'required'
+        ]);
+
+        $data = DB::table('mst_classes')->where('id',$id)->update([
+            'class_name' => $request->class_name
+        ]);
+
+        return redirect('class');
     }
 
     /**
@@ -81,6 +100,8 @@ class CheckResult extends Controller
      */
     public function destroy($id)
     {
-        //
+        MstClass::find($id)->delete();
+
+        return redirect('class');
     }
 }
